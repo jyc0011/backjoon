@@ -1,14 +1,20 @@
-n,k=map(int, input().split())
-a=input().strip()
-answer = ''
-cnt = k
+N, K = map(int, input().split())
+nums = list(map(int, str(input().strip())))
 
-for i in range(n):
-    while cnt > 0 and answer and answer[-1] < a[i]:
-        answer = answer[:-1]
-        cnt -= 1
-    answer += a[i] 
+stack = []
+cnt = K
 
-if cnt > 0:
-    answer = answer[:-cnt]
-print(answer)
+for i in range(N):
+    while cnt > 0 and stack:
+        if stack[-1] < nums[i]:
+            stack.pop()
+            cnt -= 1
+        else:
+            break
+    stack.append(nums[i])
+
+while cnt > 0:
+    stack.pop()
+    cnt -= 1
+
+print(''.join(map(str, stack)))
