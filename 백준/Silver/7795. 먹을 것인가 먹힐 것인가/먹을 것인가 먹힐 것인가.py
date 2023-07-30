@@ -1,8 +1,10 @@
-T = int(input())
+import sys
+
+T = int(sys.stdin.readline())
 for _ in range(T):
-    N, M = map(int, input().split())
-    A = list(map(int, input().split()))
-    B = list(map(int, input().split()))
+    N, M = map(int, sys.stdin.readline().split())
+    A = list(map(int, sys.stdin.readline().split()))
+    B = list(map(int, sys.stdin.readline().split()))
     A.sort()
     B.sort()
 
@@ -12,4 +14,4 @@ for _ in range(T):
         while j < M and A[i] > B[j]:
             j += 1
         result += j
-    print(result)
+    sys.stdout.write(str(result) + "\n")
