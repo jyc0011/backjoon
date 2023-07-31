@@ -1,3 +1,5 @@
+import sys
+
 def rotate_90(matrix):
     return [[matrix[j][i] for j in reversed(range(len(matrix)))] for i in range(len(matrix[0]))]
 
@@ -14,9 +16,9 @@ def combine(q1, q2, q3, q4):
     lower = [i + j for i, j in zip(q3, q4)]
     return upper + lower
 
-N, M, R = map(int, input().split())
-arr = [list(map(int, input().split())) for _ in range(N)]
-operations = list(map(int, input().split()))
+N, M, R = map(int, sys.stdin.readline().split())
+arr = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+operations = list(map(int, sys.stdin.readline().split()))
 
 for op in operations:
     if op == 1:
