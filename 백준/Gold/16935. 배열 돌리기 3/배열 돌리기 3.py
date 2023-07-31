@@ -1,79 +1,40 @@
-import sys
-input=sys.stdin.readline
+def rotate_90(matrix):
+    return [[matrix[j][i] for j in reversed(range(len(matrix)))] for i in range(len(matrix[0]))]
 
-def cal1(arr):
-    temp=[[0]*m for _ in range(n)]
-    for i in range(n):
-        temp[i]=arr[n-i-1]
-    return temp
-def cal2(arr):
-    temp=[[0]*m for _ in range(n)]
-    for i in range(n):
-        for j in range(m):
-            temp[i][j]=arr[i][m-j-1]
-    return temp
-def cal3(arr,n,m):
-    temp=[[0]*n for _ in range(m)]
-    for i in range(m):
-        for j in range(n):
-            temp[i][j]=arr[n-j-1][i]
-    return temp
-def cal4(arr,n,m):
-    temp=[[0]*n for _ in range(m)]
-    for i in range(m):
-        for j in range(n):
-            temp[i][j]=arr[j][m-i-1]
-    return temp
-def cal5(arr):
-    temp=[[0]*m for _ in range(n)]
-    for i in range(n//2):
-        for j in range(m//2):
-            temp[i][j+m//2]=arr[i][j]
-    for i in range(n//2):
-        for j in range(m//2,m):
-            temp[i+n//2][j]=arr[i][j]
-    for i in range(n//2,n):
-        for j in range(m//2,m):
-            temp[i][j-m//2]=arr[i][j]
-    for i in range(n//2,n):
-        for j in range(m//2):
-            temp[i-n//2][j]=arr[i][j]
-    return temp
-def cal6(arr):
-    temp=[[0]*m for _ in range(n)]
-    for i in range(n//2):
-        for j in range(m//2):
-            temp[i+n//2][j]=arr[i][j]
-    for i in range(n//2,n):
-        for j in range(m//2):
-            temp[i][j+m//2]=arr[i][j]
-    for i in range(n//2,n):
-        for j in range(m//2,m):
-            temp[i-n//2][j]=arr[i][j]
-    for i in range(n//2):
-        for j in range(m//2,m):
-            temp[i][j-m//2]=arr[i][j]
-    return temp
+def flip(matrix):
+    return [row[::-1] for row in matrix]
 
-n,m,r=map(int, input().split())
-arr=[list(map(int, input().split())) for _ in range(n)]
-cals=list(map(int, input().split()))
+def divide(array):
+    n = len(array)
+    m = len(array[0])
+    return [array[i][:m//2] for i in range(n//2)], [array[i][m//2:] for i in range(n//2)], [array[i][:m//2] for i in range(n//2, n)], [array[i][m//2:] for i in range(n//2, n)]
 
-for cal in cals:
-    if cal==1:
-        arr=cal1(arr)
-    elif cal==2:
-        arr=cal2(arr)
-    elif cal==3:
-        arr=cal3(arr,n,m)
-        n,m=m,n
-    elif cal==4:
-        arr=cal4(arr,n,m)
-        n,m=m,n
-    elif cal==5:
-        arr=cal5(arr)
-    else:
-        arr=cal6(arr)
+def combine(q1, q2, q3, q4):
+    upper = [i + j for i, j in zip(q1, q2)]
+    lower = [i + j for i, j in zip(q3, q4)]
+    return upper + lower
 
-for i in arr:
-    print(*i)
+N, M, R = map(int, input().split())
+arr = [list(map(int, input().split())) for _ in range(N)]
+operations = list(map(int, input().split()))
+
+for op in operations:
+    if op == 1:
+        arr = flip(rotate_90(rotate_90(arr)))
+    elif op == 2:
+        arr = flip(arr)
+    elif op == 3:
+        N, M = M, N
+        arr = rotate_90(arr)
+    elif op == 4:
+        N, M = M, N
+        arr = rotate_90(rotate_90(rotate_90(arr)))
+    elif op == 5:
+        q1, q2, q3, q4 = divide(arr)
+        arr = combine(q3, q1, q4, q2)
+    elif op == 6:
+        q1, q2, q3, q4 = divide(arr)
+        arr = combine(q2, q4, q1, q3)
+
+for row in arr:
+    print(*row)
