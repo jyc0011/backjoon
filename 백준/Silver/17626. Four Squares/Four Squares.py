@@ -1,14 +1,31 @@
-N = int(input())
-dp = [0, 1]  # dp[i]: 숫자 i를 1보다 큰 제곱수들의 합으로 표현할 때 필요한 최소 제곱수의 개수
+import math
 
-for i in range(2, N + 1):
-    min_count = 1e9  # 최소 개수를 저장할 변수
-    j = 1
+def min_squares_sum(n):
+    sqrt_n = int(math.sqrt(n))
 
-    while j ** 2 <= i:
-        min_count = min(min_count, dp[i - (j ** 2)])
-        j += 1
+    # √n이 정수일 때
+    if sqrt_n * sqrt_n == n:
+        return 1
 
-    dp.append(min_count + 1)
+    # √(n - i^2)이 정수일 때
+    for i in range(1, sqrt_n + 1):
+        n_minus_i2 = n - i**2
+        sqrt_n_minus_i2 = int(math.sqrt(n_minus_i2))
+        if sqrt_n_minus_i2 * sqrt_n_minus_i2 == n_minus_i2:
+            return 2
 
-print(dp[N])
+    # √(n - i^2 - j^2)이 정수일 때
+    for i in range(1, sqrt_n + 1):
+        n_minus_i2 = n - i**2
+        sqrt_n_minus_i2 = int(math.sqrt(n_minus_i2))
+        for j in range(1, sqrt_n_minus_i2 + 1):
+            n_minus_i2_j2 = n_minus_i2 - j**2
+            sqrt_n_minus_i2_j2 = int(math.sqrt(n_minus_i2_j2))
+            if sqrt_n_minus_i2_j2 * sqrt_n_minus_i2_j2 == n_minus_i2_j2:
+                return 3
+
+    # 남은 경우는 4
+    return 4
+
+n = int(input())
+print(min_squares_sum(n))
