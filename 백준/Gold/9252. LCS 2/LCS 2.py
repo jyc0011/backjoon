@@ -1,28 +1,32 @@
-A = input()
-B = input()
+import sys
 
-dp = [[0] * 1001 for _ in range(1001)]
-
-for i in range(1, len(A)+1):
-    for j in range(1, len(B)+1):
-        if A[i-1] == B[j-1]:
-            dp[i][j] = dp[i-1][j-1] + 1
+def lcs(s1, s2):
+    len_s1, len_s2 = len(s1), len(s2)
+    dp = [[0] * (len_s2 + 1) for _ in range(len_s1 + 1)]
+    for i in range(1, len_s1 + 1):
+        for j in range(1, len_s2 + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    lcs_str = ""
+    i, j = len_s1, len_s2
+    while i > 0 and j > 0:
+        if dp[i][j] == dp[i - 1][j]:
+            i -= 1
+        elif dp[i][j] == dp[i][j - 1]:
+            j -= 1
         else:
-            dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+            lcs_str = s1[i - 1] + lcs_str
+            i -= 1
+            j -= 1
 
-lcs_str = ""
-i, j = len(A), len(B)
-while i > 0 and j > 0:
-    if dp[i][j] == dp[i-1][j]:
-        i -= 1
-    elif dp[i][j] == dp[i][j-1]:
-        j -= 1
-    else:
-        lcs_str = A[i-1] + lcs_str
-        i -= 1
-        j -= 1
+    return dp[len_s1][len_s2], lcs_str
 
-print(dp[len(A)][len(B)])
+s1 = sys.stdin.readline().strip()
+s2 = sys.stdin.readline().strip()
 
-if dp[len(A)][len(B)]:
-    print(lcs_str)
+length, result = lcs(s1, s2)
+print(length)
+if length:
+    print(result)
