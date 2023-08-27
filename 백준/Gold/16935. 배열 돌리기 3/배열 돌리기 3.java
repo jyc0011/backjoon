@@ -1,23 +1,26 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        
-        int N = scanner.nextInt();
-        int M = scanner.nextInt();
-        int R = scanner.nextInt();
-        
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        int R = Integer.parseInt(st.nextToken());
         int[][] arr = new int[N][M];
-        
         for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
-                arr[i][j] = scanner.nextInt();
+                arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        
+        String[] strs = br.readLine().split(" ");
         for (int i = 0; i < R; i++) {
-            int op = scanner.nextInt();
+            int op = Integer.parseInt(strs[i]);
             switch (op) {
                 case 1:
                     arr = flip(rotate90(rotate90(arr)));
@@ -32,13 +35,13 @@ public class Main {
                     arr = rotate90(arr);
                     break;
                 case 4:
-                    int temp2 = N; // We need to declare a new variable name as we can't reuse the same one in the same switch scope.
+                    int temp2 = N;
                     N = M;
                     M = temp2;
                     arr = rotate90(rotate90(rotate90(arr)));
                     break;
                 case 5:
-                    int[][][] divided1 = divide(arr);  // Similar to the previous comment, using a different variable name for scope reasons.
+                    int[][][] divided1 = divide(arr);
                     arr = combine(divided1[2], divided1[0], divided1[3], divided1[1]);
                     break;
                 case 6:
