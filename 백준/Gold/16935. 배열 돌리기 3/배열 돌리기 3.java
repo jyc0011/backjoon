@@ -18,27 +18,35 @@ public class Main {
         
         for (int i = 0; i < R; i++) {
             int op = scanner.nextInt();
-            if (op == 1) {
-                arr = flip(rotate90(rotate90(arr)));
-            } else if (op == 2) {
-                arr = flip(arr);
-            } else if (op == 3) {
-                int temp = N;
-                N = M;
-                M = temp;
-                arr = rotate90(arr);
-            } else if (op == 4) {
-                int temp = N;
-                N = M;
-                M = temp;
-                arr = rotate90(rotate90(rotate90(arr)));
-            } else if (op == 5) {
-                int[][][] divided = divide(arr);
-                arr = combine(divided[2], divided[0], divided[3], divided[1]);
-            } else if (op == 6) {
-                int[][][] divided = divide(arr);
-                arr = combine(divided[1], divided[3], divided[0], divided[2]);
+            switch (op) {
+                case 1:
+                    arr = flip(rotate90(rotate90(arr)));
+                    break;
+                case 2:
+                    arr = flip(arr);
+                    break;
+                case 3:
+                    int temp = N;
+                    N = M;
+                    M = temp;
+                    arr = rotate90(arr);
+                    break;
+                case 4:
+                    int temp2 = N; // We need to declare a new variable name as we can't reuse the same one in the same switch scope.
+                    N = M;
+                    M = temp2;
+                    arr = rotate90(rotate90(rotate90(arr)));
+                    break;
+                case 5:
+                    int[][][] divided1 = divide(arr);  // Similar to the previous comment, using a different variable name for scope reasons.
+                    arr = combine(divided1[2], divided1[0], divided1[3], divided1[1]);
+                    break;
+                case 6:
+                    int[][][] divided2 = divide(arr);
+                    arr = combine(divided2[1], divided2[3], divided2[0], divided2[2]);
+                    break;
             }
+            
         }
 
         for (int i = 0; i < N; i++) {
