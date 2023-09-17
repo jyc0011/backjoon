@@ -1,9 +1,9 @@
-n, k = map(int, input().split())
+n,k=map(int,input().split())
 
-def pascal(n, k):
-    if k == 0 or k == n:
-        return 1
-    return pascal(n - 1, k - 1) + pascal(n - 1, k)
+pascal = [[1 for _ in range(i)] for i in range(1, 31)]
 
-result = pascal(n - 1, k - 1)
-print(result)
+for i in range(2, 30):
+    for j in range(1, i):
+        pascal[i][j] = pascal[i-1][j-1] + pascal[i-1][j]
+
+print(pascal[n-1][k-1])
