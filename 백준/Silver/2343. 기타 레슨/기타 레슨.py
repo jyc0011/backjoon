@@ -1,29 +1,29 @@
 import sys
 
-input=sys.stdin.readline
+def required_blu_rays(lectures, max_length):
+    count = 1
+    current_length = 0
 
-n,m=map(int,input().rstrip().split())
-lectures=list(map(int,input().rstrip().split()))
-
-start, end = max(lectures), sum(lectures)
-
-while start <= end:
-    mid = (start + end) // 2
-    # 최대 길이가 'mid'인 경우
-    count = 1 
-    total_length = 0  # 현재 Blu-ray의 총 강의 길이
-    
     for lecture in lectures:
-        if total_length + lecture > mid:
+        if current_length + lecture > max_length:
             count += 1
-            total_length = 0
-        total_length += lecture
-    
-    # M개 이상의 Blu-ray가 필요한 경우 크기 늘리기
-    if count > m:
-        start = mid + 1
-    # 그렇지 않으면 크기 감소
-    else:
-        end = mid - 1
+            current_length = 0
+        current_length += lecture
 
-print(start)
+    return count
+
+input = sys.stdin.readline
+
+n, m = map(int, input().rstrip().split())
+lectures = list(map(int, input().rstrip().split()))
+
+min_length, max_length = max(lectures), sum(lectures)
+
+while min_length <= max_length:
+    potential_length = (min_length + max_length) // 2
+    if required_blu_rays(lectures, potential_length) > m:
+        min_length = potential_length + 1
+    else:
+        max_length = potential_length - 1
+
+print(min_length)
