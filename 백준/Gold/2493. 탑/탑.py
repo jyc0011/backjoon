@@ -4,15 +4,15 @@ from collections import deque
 input = sys.stdin.readline
 
 N = int(input())
-towers = deque(map(int, input().split()))
-li = deque()
+towers = list(map(int, input().split()))
+li = []
 ans = [0] * N
 
 for i in range(N):
-    temp = towers[i]
-    while li and li[-1][0] < temp:
+    height = towers[i]
+    while li and li[-1][0] < height:
         li.pop()
     if li:
         ans[i] = li[-1][1] + 1
-    li.append((temp, i))
+    li.append((height, i))
 print(" ".join(map(str, ans)))
