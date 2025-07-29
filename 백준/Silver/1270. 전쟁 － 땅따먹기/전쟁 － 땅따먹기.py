@@ -1,10 +1,13 @@
 import sys
 input = sys.stdin.readline
 
-n=int(input())
+n = int(input().strip())
+out = []
+
 for _ in range(n):
-    li=list(map(int,input().split()))
-    T, soldiers = li[0], li[1:]
+    nums = list(map(int, input().split()))
+    T, soldiers = nums[0], nums[1:]
+    half = T // 2
     cand, cnt = None, 0
     for s in soldiers:
         if cnt == 0:
@@ -13,8 +16,8 @@ for _ in range(n):
             cnt += 1
         else:
             cnt -= 1
-
-    if cand is not None and soldiers.count(cand) > T // 2:
-        print(cand)
+    if cand is not None and soldiers.count(cand) > half:
+        out.append(str(cand))
     else:
-        print("SYJKGW")
+        out.append("SYJKGW")
+sys.stdout.write("\n".join(out))
