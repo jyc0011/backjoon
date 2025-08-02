@@ -5,10 +5,10 @@ def solution(players, m, k):
     serverQ=deque([])
     for _ in range(k):
         serverQ.append(0)
-    nowS=1
+    nowS=0
     
     for i in range(24):
-        temp=players[i]//m + 1
+        temp=players[i]//m
         nowS-=serverQ.popleft()
         if temp - nowS > 0 :
             answer+=(temp-nowS)
